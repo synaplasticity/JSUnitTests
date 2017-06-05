@@ -14,6 +14,41 @@ describe ('CartSummary', function() {
         expect(cartSummary.getSubTotal()).to.equal(0);
     });
 
+    it('getSubtotal() should return error, if price is empty', function () {
+        var cartSummary = new CartSummary([
+                {id: 1,
+                 quantity: 10
+                }
+            ]);
+
+        expect(function() {
+            cartSummary.getSubTotal();
+        }).to.throw(Error);
+    });
+
+    it('getSubtotal() should return error, if quantity is empty', function () {
+        var cartSummary = new CartSummary([
+                {id: 1,
+                 price: 1
+                }
+            ]);
+
+        expect(function() {
+            cartSummary.getSubTotal();
+        }).to.throw(Error);
+    });
+
+    it('getSubtotal() should return error, if quantity and price is empty', function () {
+        var cartSummary = new CartSummary([
+                {id: 1
+                }
+            ]);
+
+        expect(function() {
+            cartSummary.getSubTotal();
+        }).to.throw(Error);
+    });
+
     it('getSubTotal should return 100 for one item of price 10 and quantity 10.', function () {
         var cartSummary = new CartSummary([
                 {id: 1,

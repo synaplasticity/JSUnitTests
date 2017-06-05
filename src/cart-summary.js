@@ -10,6 +10,10 @@ function CartSummary(items) {
 
         if (this._items.length) {
             return this._items.reduce(function(subtotal, item) {
+                if (item.price === undefined || item.quantity === undefined) {
+                    throw Error("Price or quantity cannot be empty for item - "  + item.id);
+                }
+
                 return subtotal += (item.price * item.quantity);
             }, 0);
         }
