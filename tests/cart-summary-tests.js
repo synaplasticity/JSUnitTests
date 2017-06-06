@@ -2,12 +2,22 @@
 
 var chai = require('chai');
 var expect = chai.expect;
+var sinon = require('sinon');
+
 var CartSummary = require('../src/cart-summary');
 var tax = require('../src/tax');
 
-var sinon = require('sinon');
 
 describe ('CartSummary', function() {
+    it('getSubtotal() should throw an error, if there is no input array', function () {
+        var cartSummary;
+
+        expect(function() {
+            cartSummary = new CartSummary();
+        }).to.throw(Error);
+    });
+
+
     it('getSubtotal() should return 0, if there no items', function () {
         var cartSummary = new CartSummary([]);
 
@@ -26,7 +36,7 @@ describe ('CartSummary', function() {
         }).to.throw(Error);
     });
 
-    it('getSubtotal() should return error, if quantity is empty', function () {
+    it('getSubtotal() should throw an error, if quantity is empty', function () {
         var cartSummary = new CartSummary([
                 {id: 1,
                  price: 1
@@ -38,9 +48,22 @@ describe ('CartSummary', function() {
         }).to.throw(Error);
     });
 
-    it('getSubtotal() should return error, if quantity and price is empty', function () {
+    it('getSubtotal() should throw an error, if quantity and price is empty', function () {
         var cartSummary = new CartSummary([
                 {id: 1
+                }
+            ]);
+
+        expect(function() {
+            cartSummary.getSubTotal();
+        }).to.throw(Error);
+    });
+
+    it('getSubTotal should throw an error if price is -ve.', function () {
+        var cartSummary = new CartSummary([
+                {id: 1,
+                 quantity: 10,
+                 price: -100
                 }
             ]);
 
